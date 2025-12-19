@@ -44,6 +44,6 @@ jobs:
 
       - name: Upload static site to S3
         run: |
-          aws s3 sync app/web s3://${{ needs.terraform-apply.outputs.bucket_name }} \
+          aws s3 sync app/web s3://${{ needs.terraform-apply.outputs.site_bucket_name }} \
             --delete \
             --cache-control "public, max-age=300"
