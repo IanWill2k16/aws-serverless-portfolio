@@ -1,16 +1,16 @@
-# locals {
-#   name_prefix = "${var.project_name}-${var.environment}"
-# }
+locals {
+  name_prefix = "${var.project_name}-${var.environment}"
+}
 
-# module "s3_site" {
-#   source      = "./modules/s3_site"
-#   name_prefix = local.name_prefix
-# }
+module "s3_site" {
+  source      = "./modules/s3_site"
+  bucket_name = "${local.name_prefix}-site-${data.aws_caller_identity.current.account_id}"
+}
 
-# module "dynamodb" {
-#   source      = "./modules/dynamodb"
-#   name_prefix = local.name_prefix
-# }
+module "dynamodb" {
+  source      = "./modules/dynamodb"
+  table_name = "${local.name_prefix}-visits"
+}
 
 # module "iam" {
 #   source      = "./modules/iam"
@@ -30,10 +30,20 @@
 #   lambda_arn  = module.lambda.arn
 # }
 
-# module "cloudfront" {
-#   source          = "./modules/cloudfront"
-#   name_prefix     = local.name_prefix
-#   domain_name     = var.domain_name
-#   s3_bucket_name  = module.s3_site.bucket_name
-#   api_domain_name = module.api_gateway.invoke_url
-# }
+module "acm" {
+  source = "./modules/acm"
+  
+  domain_name = var.domain_name
+}
+
+module "cloudfront" {
+  source          = "./modules/cloudfront"
+  name_prefix     = local.name_prefix
+  domain_name     = var.domain_name
+  s3_bucket_domain_name  = module.s3_site.bucket_domain_name
+  acm_certificate_arn = module.acm.certificate_arn
+
+    depends_on = [
+    module.acm
+  ]
+}
