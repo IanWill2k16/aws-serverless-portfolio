@@ -10,6 +10,7 @@ permissions:
 
 jobs:
   terraform:
+    name: Terraform Deployment
     runs-on: ubuntu-latest
 
     steps:
@@ -24,8 +25,10 @@ jobs:
           role-to-assume: arn:aws:iam::629061775229:role/github-actions-terraform
           aws-region: us-east-2
 
-      - run: terraform init
+      - name: Terraform Init
+        run: terraform init
         working-directory: infra
 
-      - run: terraform plan
+      - name: Terraform Plan
+        run: terraform plan
         working-directory: infra

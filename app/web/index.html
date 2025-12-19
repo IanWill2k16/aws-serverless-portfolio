@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Cloud Automation Portfolio</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <button id="theme-toggle" aria-label="Toggle dark mode">
+    🌙
+</button>
+    <div class="container">
+        <h1>Cloud Automation Portfolio</h1>
+        <h3><i>Serverless AWS infrastructure deployed with Terraform and GitHub Actions</i></h3>
+
+        <p id="response" class="counter">Loading visitor count…</p>
+
+        <p>
+            This site is a small serverless portfolio project deployed on Amazon AWS.
+            The visitor counter is backed by a Lambda Function and DynamoDB Table API,
+            with all infrastructure defined in Terraform and deployed via GitHub Actions.
+        </p>
+
+        <ul>
+            <li>Static website hosted on S3</li>
+            <li>Python Lambda Function API</li>
+            <li>DynamoDB (Table API) backend</li>
+            <li>CI/CD using GitHub Actions and OIDC</li>
+        </ul>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
