@@ -1,0 +1,31 @@
+name: Terraform
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.14.0
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::629061775229:role/github-actions-terraform
+          aws-region: us-east-2
+
+      - run: terraform init
+        working-directory: infra
+
+      - run: terraform plan
+        working-directory: infra
