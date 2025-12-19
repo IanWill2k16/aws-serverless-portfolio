@@ -34,7 +34,7 @@ jobs:
         working-directory: infra
 
       - name: Terraform Apply
-        run: terraform apply
+        run: terraform apply -auto-approve
         working-directory: infra
 
       - name: Upload static site to S3
