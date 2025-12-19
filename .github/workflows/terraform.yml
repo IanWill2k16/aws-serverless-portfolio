@@ -67,3 +67,33 @@ jobs:
           aws s3 sync app/web s3://${{ needs.terraform.outputs.site_bucket_name }} \
             --delete \
             --cache-control "public, max-age=300"
+      
+      - name: Invalidate CloudFront
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ needs.terraform.outputs.cloudfront_distribution_id }} \
+            --paths "/*"
+
+  api:
+    name: API CI/CD
+    needs: terraform
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.14.0
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::629061775229:role/github-actions-terraform
+          aws-region: us-east-2
+
+      - name: Inject API URL into frontend
+        run: |
+          sed -i "s|__API_BASE_URL__|${{ steps.tf_outputs.outputs.api_base_url }}|g" app/web/script.js
+
+
+

@@ -9,3 +9,7 @@ output "bucket_arn" {
 output "bucket_name" {
   value = aws_s3_bucket.this.id
 }
+
+output "api_base_url" {
+  value = aws_apigatewayv2_api.this.api_endpoint
+}

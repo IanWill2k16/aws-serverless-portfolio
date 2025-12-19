@@ -17,12 +17,12 @@ module "dynamodb" {
 #   name_prefix = local.name_prefix
 # }
 
-# module "lambda" {
-#   source          = "./modules/lambda"
-#   name_prefix     = local.name_prefix
-#   role_arn        = module.iam.lambda_role_arn
-#   dynamodb_table  = module.dynamodb.table_name
-# }
+module "lambda" {
+  source          = "./modules/lambda"
+  name_prefix     = local.name_prefix
+  table_name  = module.dynamodb.table_name
+  table_arn   = module.dynamodb.table_arn
+}
 
 # module "api_gateway" {
 #   source      = "./modules/api_gateway"
