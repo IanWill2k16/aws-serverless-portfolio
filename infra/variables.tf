@@ -11,5 +11,5 @@ variable "region" {
 }
 
 variable "domain_name" {
-    default = "ianwilliamson.dev"
+  default = "ianwilliamson.dev"
 }

@@ -1,9 +1,9 @@
 terraform {
   backend "s3" {
-    bucket         = "cloudportfolio-tfstate"
-    key            = "terraform.tfstate"
-    region         = "us-east-2"
-    dynamodb_table = "terraform-locks"
-    encrypt        = true
+    bucket       = "cloudportfolio-tfstate"
+    key          = "terraform.tfstate"
+    region       = "us-east-2"
+    use_lockfile = true
+    encrypt      = true
   }
 }

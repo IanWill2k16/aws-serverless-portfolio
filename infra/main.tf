@@ -8,7 +8,7 @@ module "s3_site" {
 }
 
 module "dynamodb" {
-  source      = "./modules/dynamodb"
+  source     = "./modules/dynamodb"
   table_name = "${local.name_prefix}-visits"
 }
 
@@ -31,19 +31,20 @@ module "dynamodb" {
 # }
 
 module "acm" {
-  source = "./modules/acm"
-  
+  source      = "./modules/acm"
   domain_name = var.domain_name
 }
 
 module "cloudfront" {
-  source          = "./modules/cloudfront"
-  name_prefix     = local.name_prefix
-  domain_name     = var.domain_name
-  s3_bucket_domain_name  = module.s3_site.bucket_domain_name
-  acm_certificate_arn = module.acm.certificate_arn
+  source                = "./modules/cloudfront"
+  name_prefix           = local.name_prefix
+  domain_name           = var.domain_name
+  bucket_name           = module.s3_site.bucket_name
+  bucket_arn            = module.s3_site.bucket_arn
+  s3_bucket_domain_name = module.s3_site.bucket_domain_name
+  acm_certificate_arn   = module.acm.certificate_arn
 
-    depends_on = [
+  depends_on = [
     module.acm
   ]
 }
