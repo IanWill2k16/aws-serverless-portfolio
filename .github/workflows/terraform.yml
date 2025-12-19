@@ -41,9 +41,27 @@ jobs:
         id: tf_outputs
         run: |
           echo "site_bucket_name=$(terraform output -raw site_bucket_name)" >> $GITHUB_OUTPUT
+        working-directory: infra
 
+  web:
+    name: Web CI/CD
+    needs: terraform
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.14.0
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::629061775229:role/github-actions-terraform
+          aws-region: us-east-2
+      
       - name: Upload static site to S3
         run: |
-          aws s3 sync app/web s3://${{ needs.terraform-apply.outputs.site_bucket_name }} \
+          aws s3 sync app/web s3://${{ needs.terraform.outputs.site_bucket_name }} \
             --delete \
             --cache-control "public, max-age=300"
