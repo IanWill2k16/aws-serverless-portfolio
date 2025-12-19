@@ -12,6 +12,8 @@ jobs:
   terraform:
     name: Terraform Deployment
     runs-on: ubuntu-latest
+    outputs:
+      site_bucket_name: ${{ steps.tf_outputs.outputs.site_bucket_name }}
 
     steps:
       - uses: actions/checkout@v4
