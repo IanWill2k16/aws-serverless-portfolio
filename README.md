@@ -54,16 +54,23 @@ All infrastructure is provisioned with Terraform and deployed automatically usin
 
 ## CI/CD
 
-GitHub Actions is used to fully automate provisioning and deployment:
+GitHub Actions is used to automate infrastructure provisioning and application deployment with clear separation between validation and execution.
 
-* **Main Branch Pushes**
+### Pull Requests
 
-  * Terraform init, plan, and apply using remote state
-  * Frontend API endpoint injected at build time
-  * Static site assets synced to S3
-  * CloudFront cache invalidation
+- Terraform initialization, validation, and planning
+- Infrastructure changes reviewed via Terraform plan output
+- No changes applied until approval and merge
 
-Authentication to AWS is handled using GitHub Actions OIDC and IAM role assumption. No long-lived AWS credentials or secrets are stored in the repository.
+### Main Branch Merges
+
+- Terraform apply using remote state
+- Frontend assets built with API endpoint injected at deploy time
+- Static site synced to S3
+- CloudFront cache invalidation to publish updates
+
+Authentication to AWS is handled using GitHub Actions OIDC and IAM role assumption.
+No long-lived AWS credentials or secrets are stored in the repository.
 
 ---
 
