@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <title>Cloud Automation Portfolio</title>
@@ -8,8 +9,8 @@
 
 <body>
     <button id="theme-toggle" aria-label="Toggle dark mode">
-    🌙
-</button>
+        🌙
+    </button>
     <div class="container">
         <h1>Cloud Automation Portfolio</h1>
         <h3><i>Serverless AWS infrastructure deployed with Terraform and GitHub Actions</i></h3>
@@ -22,14 +23,58 @@
             with all infrastructure defined in Terraform and deployed via GitHub Actions.
         </p>
 
-        <ul>
-            <li>Static website hosted on S3</li>
-            <li>Python Lambda Function API</li>
-            <li>DynamoDB (Table API) backend</li>
-            <li>CI/CD using GitHub Actions and OIDC</li>
-        </ul>
-    </div>
+        <section class="projects">
+            <h2>Selected Projects</h2>
 
-    <script src="script.js"></script>
+            <div class="project-grid">
+
+                <a href="https://github.com/IanWill2k16/automated-user-provisioning" class="project-card"
+                    target="_blank" rel="noopener">
+                    <h3>Event-Driven Identity Provisioning</h3>
+                    <p>
+                        A cloud-native identity provisioning platform built around asynchronous,
+                        event-driven workflows. Webhook ingestion, durable queueing, and controlled
+                        execution are combined to safely automate user lifecycle operations.
+                    </p>
+                    <span class="stack">
+                        Azure · Terraform · Functions · Automation · Managed Identity
+                    </span>
+                    <span class="cta">View on GitHub →</span>
+                </a>
+
+
+                <a href="https://github.com/IanWill2k16/aws-serverless-portfolio" class="project-card" target="_blank"
+                    rel="noopener">
+                    <h3>AWS Serverless Portfolio</h3>
+                    <p>
+                        Static website backed by a Python Lambda API and DynamoDB,
+                        provisioned with Terraform and deployed through GitHub Actions
+                        using OIDC authentication.
+                    </p>
+                    <p class="meta">
+                        This site is served by the infrastructure in this repository.
+                    </p>
+
+                    <span class="stack">AWS · Terraform · Lambda · DynamoDB · CloudFront</span>
+                    <span class="cta">View on GitHub →</span>
+                </a>
+
+                <a href="https://github.com/IanWill2k16/automation-patterns" class="project-card" target="_blank"
+                    rel="noopener">
+                    <h3>Automation Patterns</h3>
+                    <p>
+                        A curated set of production-inspired automation scripts focused
+                        on identity, asset lifecycle, and network operations, designed
+                        with safety and maintainability in mind.
+                    </p>
+                    <span class="stack">Python · PowerShell · REST APIs · Identity · Networking</span>
+                    <span class="cta">View on GitHub →</span>
+                </a>
+
+            </div>
+        </section>
+
+        <script src="script.js"></script>
 </body>
+
 </html>

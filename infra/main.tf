@@ -18,8 +18,8 @@ module "dynamodb" {
 # }
 
 module "lambda" {
-  source          = "./modules/lambda"
-  name_prefix     = local.name_prefix
+  source      = "./modules/lambda"
+  name_prefix = local.name_prefix
   table_name  = module.dynamodb.table_name
   table_arn   = module.dynamodb.table_arn
 }
@@ -28,7 +28,7 @@ module "api_gateway" {
   source      = "./modules/api_gateway"
   name_prefix = local.name_prefix
   lambda_arn  = module.lambda.lambda_arn
-  lambda_name   = module.lambda.lambda_name
+  lambda_name = module.lambda.lambda_name
 }
 
 module "acm" {
