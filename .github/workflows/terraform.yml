@@ -14,6 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       site_bucket_name: ${{ steps.tf_outputs.outputs.site_bucket_name }}
+      cloudfront_distribution_id: ${{ steps.tf_outputs.outputs.cloudfront_distribution_id }}
+      
 
     steps:
       - uses: actions/checkout@v4
@@ -43,6 +45,7 @@ jobs:
         id: tf_outputs
         run: |
           echo "site_bucket_name=$(terraform output -raw site_bucket_name)" >> $GITHUB_OUTPUT
+          echo "cloudfront_distribution_id=$(terraform output -raw cloudfront_distribution_id)" >> $GITHUB_OUTPUT
         working-directory: infra
 
   web:
