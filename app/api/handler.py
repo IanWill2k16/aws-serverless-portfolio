@@ -8,7 +8,10 @@ TABLE = os.environ["TABLE_NAME"]
 def handler(event, context):
     resp = ddb.update_item(
         TableName=TABLE,
-        Key={"id": {"S": "site"}},
+        Key={
+            "pk": {"S": "site"},
+            "sk": {"S": "counter"}
+        },
         UpdateExpression="ADD #c :one",
         ExpressionAttributeNames={"#c": "count"},
         ExpressionAttributeValues={":one": {"N": "1"}},

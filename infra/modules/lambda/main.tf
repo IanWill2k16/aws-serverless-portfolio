@@ -53,6 +53,12 @@ resource "aws_iam_role_policy_attachment" "ddb" {
   policy_arn = aws_iam_policy.lambda_ddb.arn
 }
 
+resource "aws_iam_role_policy_attachment" "lambda_basic_logs" {
+  role       = aws_iam_role.lambda_exec.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
+
 data "archive_file" "visit_lambda" {
   type        = "zip"
   source_file = "${path.module}/../../../app/api/handler.py"
