@@ -25,3 +25,5 @@ secrets.*
 # Python functions
 venv/
 __pycache__/
+
+*.zip
