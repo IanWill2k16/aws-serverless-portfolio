@@ -55,8 +55,8 @@ resource "aws_iam_role_policy_attachment" "ddb" {
 
 data "archive_file" "visit_lambda" {
   type        = "zip"
-  source_file = "${path.module}/../app/api/handler.py"
-  output_path = "${path.module}/../app/api/handler.zip"
+  source_file = "${path.module}/../../../app/api/handler.py"
+  output_path = "${path.module}/visit_lambda.zip"
 }
 
 resource "aws_lambda_function" "visit" {
