@@ -4,7 +4,7 @@ async function loadPage() {
     const responseElement = document.getElementById("response");
 
     try {
-        const res = await fetch(`${API_BASE_URL}/api/visit`);
+        const res = await fetch(`${API_BASE_URL}/visit`);
         const data = await res.json();
         responseElement.textContent = `Visitor count: ${data.count}`;
     } catch (err) {

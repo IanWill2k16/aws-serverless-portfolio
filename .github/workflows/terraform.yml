@@ -15,6 +15,7 @@ jobs:
     outputs:
       site_bucket_name: ${{ steps.tf_outputs.outputs.site_bucket_name }}
       cloudfront_distribution_id: ${{ steps.tf_outputs.outputs.cloudfront_distribution_id }}
+      api_url: ${{ steps.tf_outputs.outputs.api_url }}
       
 
     steps:
@@ -46,6 +47,7 @@ jobs:
         run: |
           echo "site_bucket_name=$(terraform output -raw site_bucket_name)" >> $GITHUB_OUTPUT
           echo "cloudfront_distribution_id=$(terraform output -raw cloudfront_distribution_id)" >> $GITHUB_OUTPUT
+          echo "api_url=$(terraform output -raw api_url)" >> $GITHUB_OUTPUT
         working-directory: infra
 
   web:
@@ -64,6 +66,10 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::629061775229:role/github-actions-terraform
           aws-region: us-east-2
+    
+      - name: Inject API URL into frontend
+        run: |
+          sed -i "s|__API_BASE_URL__|${{ needs.terraform.outputs.api_url }}|g" app/web/script.js
       
       - name: Upload static site to S3
         run: |
@@ -75,28 +81,4 @@ jobs:
         run: |
           aws cloudfront create-invalidation \
             --distribution-id ${{ needs.terraform.outputs.cloudfront_distribution_id }} \
-            --paths "/*"
-
-  api:
-    name: API CI/CD
-    needs: terraform
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: 1.14.0
-
-      - uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: arn:aws:iam::629061775229:role/github-actions-terraform
-          aws-region: us-east-2
-
-      - name: Inject API URL into frontend
-        run: |
-          sed -i "s|__API_BASE_URL__|${{ steps.tf_outputs.outputs.api_base_url }}|g" app/web/script.js
-
-
-
+            --paths "/index.html" "/script.js"
