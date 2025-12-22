@@ -15,6 +15,8 @@ def handler(event, context):
         ReturnValues="UPDATED_NEW"
     )
 
+    count = int(resp["Attributes"]["count"]["N"])
+
     return {
         "statusCode": 200,
         "headers": {
@@ -23,4 +25,3 @@ def handler(event, context):
         },
         "body": json.dumps({"count": count})
     }
-
